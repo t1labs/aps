@@ -1,0 +1,44 @@
+version: 2.1
+jobs:
+  security:
+    working_directory: /go/src/github.com/t1labs/aps
+    docker:
+      - image: golang:1.12
+    steps:
+      - checkout
+      - run:
+          name: Run security checks
+          command: make security
+  test:
+    working_directory: /go/src/github.com/t1labs/aps
+    docker:
+      - image: golang:1.12
+    steps:
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            mv ~/docker-compose /usr/local/bin/docker-compose
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: Run tests
+          command: make test
+  vet:
+    working_directory: /go/src/github.com/t1labs/aps
+    docker:
+      - image: golang:1.12
+    steps:
+      - checkout
+      - run:
+          name: Run vet checks
+          command: make vet
+
+workflows:
+  version: 2
+  us_east_1:
+    jobs:
+      - security
+      - test
+      - vet
