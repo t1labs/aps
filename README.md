@@ -14,6 +14,7 @@ To get started all you need is Docker.
 docker run -e DEXCOM_SHARE_USERNAME=<your-username> -e DEXCOM_SHARE_PASSWORD=<your-password> t1labs/aps
 ```
 
+> Note that this username and password can be that of the owner's dexcom account, or a followers account.
 > This should start a Docker container, and output your blood sugar level every minute.
 
 ## Contributing
