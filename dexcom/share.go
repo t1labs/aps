@@ -51,6 +51,16 @@ func NewShare(config ShareConfig) *Share {
 // and send it onto the channel when it is found. This function will not
 // stop in the face of an error, it will send it on the error channel.
 func (sh *Share) ListenForGlucoses(ctx context.Context, gs chan Glucose, errs chan error) {
+	sessionID, err := sh.login(ctx)
+	if err != nil {
+		errs <- err
+	}
+	g, err := sh.getLatestGlucose(ctx, sessionID)
+	if err != nil {
+		errs <- err
+	}
+	gs <- g
+
 	ticker := time.NewTicker(shareInterval).C
 
 	for {
@@ -121,6 +131,7 @@ func (sh *Share) getLatestGlucose(ctx context.Context, sessionID string) (Glucos
 	for _, sg := range sgs {
 		g := Glucose{
 			Value:     sg.Value,
+			Unit: "mg/dl",
 			SampledAt: time.Now(),
 		}
 		return g, nil
