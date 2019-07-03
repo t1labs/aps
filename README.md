@@ -21,7 +21,7 @@ docker run -e DEXCOM_SHARE_USERNAME=<your-username> -e DEXCOM_SHARE_PASSWORD=<yo
 You should receive output looking like this. The output will update every minute.
 
 ```
-{"date":"2019-07-03T19:26:23.9933339Z","glucose":220,"level":"info","sampledAt":"2019-07-03T19:26:23.9932543Z","unit":"mg/dl"}
+{"date":"2019-07-03T19:26:23.9933339Z","glucose":134,"level":"info","sampledAt":"2019-07-03T19:26:23.9932543Z","unit":"mg/dl"}
 ```
 
 ## Contributing
